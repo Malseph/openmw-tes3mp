@@ -89,6 +89,7 @@ set(SERVER
     Script/Functions/GUI.cpp Script/Functions/Items.cpp Script/Functions/Mechanics.cpp
     Script/Functions/Positions.cpp Script/Functions/Quests.cpp Script/Functions/Settings.cpp
     Script/Functions/Spells.cpp Script/Functions/Stats.cpp Script/Functions/Timer.cpp
+    Script/Functions/DynamicRecords.cpp
 
     Script/API/TimerAPI.cpp Script/API/PublicFnAPI.cpp
         ${PawnScript_Sources}
@@ -135,6 +136,7 @@ set(PROCESSORS_PLAYER
         processors/player/ProcessorPlayerShapeshift.hpp processors/player/ProcessorPlayerSkill.hpp
         processors/player/ProcessorPlayerSpeech.hpp processors/player/ProcessorPlayerSpellbook.hpp
         processors/player/ProcessorPlayerStatsDynamic.hpp processors/player/ProcessorPlayerTopic.hpp
+        processors/player/ProcessorPlayerDynamicRecord.hpp processors/player/ProcessorPlayerInteract.hpp
         )
 
 source_group(tes3mp-server\\processors\\player FILES ${PROCESSORS_PLAYER})

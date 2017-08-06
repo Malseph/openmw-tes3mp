@@ -13,12 +13,13 @@ namespace mwmp
         int count;
         int charge;
         double enchantmentCharge;
+        std::string soul;
 
         int actionCount;
 
         inline bool operator==(const ContainerItem& rhs)
         {
-            return refId == rhs.refId && count == rhs.count && charge == rhs.charge && enchantmentCharge == rhs.enchantmentCharge;
+            return refId == rhs.refId && count == rhs.count && charge == rhs.charge && enchantmentCharge == rhs.enchantmentCharge && soul == rhs.soul;
         }
     };
 
@@ -31,6 +32,7 @@ namespace mwmp
         int charge;
         double enchantmentCharge;
         int goldValue;
+        std::string soul;
 
         ESM::Position position;
 

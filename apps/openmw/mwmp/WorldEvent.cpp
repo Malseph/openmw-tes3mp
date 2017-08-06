@@ -101,6 +101,9 @@ void WorldEvent::editContainers(MWWorld::CellStore* cellStore)
                     if (containerItem.enchantmentCharge > -1)
                         newPtr.getCellRef().setEnchantmentCharge(containerItem.enchantmentCharge);
 
+                    if (!containerItem.soul.empty())
+                        newPtr.getCellRef().setSoul(containerItem.soul);
+
                     containerStore.add(newPtr, containerItem.count, ownerPtr, true);
                 }
                 else if (action == BaseEvent::REMOVE)
@@ -113,7 +116,8 @@ void WorldEvent::editContainers(MWWorld::CellStore* cellStore)
                         {
                             if (ptr.getRefData().getCount() == containerItem.count &&
                                 ptr.getCellRef().getCharge() == containerItem.charge &&
-                                ptr.getCellRef().getEnchantmentCharge() == containerItem.enchantmentCharge)
+                                ptr.getCellRef().getEnchantmentCharge() == containerItem.enchantmentCharge &&
+                                ptr.getCellRef().getSoul() == containerItem.soul)
                             {
                                 // Is this an actor's container? If so, unequip this item if it was equipped
                                 if (ptrFound.getClass().isActor())
@@ -183,6 +187,9 @@ void WorldEvent::placeObjects(MWWorld::CellStore* cellStore)
 
             if (worldObject.enchantmentCharge > -1)
                 newPtr.getCellRef().setEnchantmentCharge(worldObject.enchantmentCharge);
+
+            if (!worldObject.soul.empty())
+                newPtr.getCellRef().setSoul(worldObject.soul);
 
             newPtr.getCellRef().setGoldValue(worldObject.goldValue);
             newPtr = MWBase::Environment::get().getWorld()->placeObject(newPtr, cellStore, worldObject.position);
@@ -624,6 +631,7 @@ void WorldEvent::addObjectPlace(const MWWorld::Ptr& ptr)
     worldObject.mpNum = 0;
     worldObject.charge = ptr.getCellRef().getCharge();
     worldObject.enchantmentCharge = ptr.getCellRef().getEnchantmentCharge();
+    worldObject.soul = ptr.getCellRef().getSoul();
 
     // Make sure we send the RefData position instead of the CellRef one, because that's what
     // we actually see on this client
@@ -1001,6 +1009,7 @@ void WorldEvent::sendContainers(MWWorld::CellStore* cellStore)
             containerItem.count = itemPtr.getRefData().getCount();
             containerItem.charge = itemPtr.getCellRef().getCharge();
             containerItem.enchantmentCharge = itemPtr.getCellRef().getEnchantmentCharge();
+            containerItem.soul = itemPtr.getCellRef().getSoul();
 
             worldObject.containerItems.push_back(containerItem);
         }

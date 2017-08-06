@@ -19,6 +19,7 @@
 #include <Script/Functions/Quests.hpp>
 #include <Script/Functions/Settings.hpp>
 #include <Script/Functions/Spells.hpp>
+#include <Script/Functions/DynamicRecords.hpp>
 #include <Script/Functions/Stats.hpp>
 #include <Script/Functions/World.hpp>
 #include <RakNetTypes.h>
@@ -129,6 +130,7 @@ public:
             QUESTAPI,
             SETTINGSAPI,
             SPELLAPI,
+            DYNAMICRECORDAPI,
             STATAPI,
             WORLDAPI
     };
@@ -155,11 +157,13 @@ public:
             {"OnPlayerShapeshift",       Function<void, unsigned short>()},
             {"OnPlayerSpellbook",        Function<void, unsigned short>()},
             {"OnPlayerQuickKeys",        Function<void, unsigned short>()},
+            {"OnPlayerDynamicRecord",    Function<void, unsigned short>()},
             {"OnPlayerTopic",            Function<void, unsigned short>()},
             {"OnPlayerDisposition",      Function<void, unsigned short>()},
             {"OnPlayerBook",             Function<void, unsigned short>()},
             {"OnPlayerMap",              Function<void, unsigned short>()},
             {"OnPlayerRest",             Function<void, unsigned short>()},
+            {"OnPlayerInteract",         Function<void, unsigned short, unsigned short, bool>()},
             {"OnCellLoad",               Function<void, unsigned short, const char*>()},
             {"OnCellUnload",             Function<void, unsigned short, const char*>()},
             {"OnCellDeletion",           Function<void, const char*>()},

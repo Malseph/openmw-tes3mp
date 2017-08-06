@@ -28,6 +28,7 @@
     {"GetInventoryItemCount",                 ItemFunctions::GetInventoryItemCount},\
     {"GetInventoryItemCharge",                ItemFunctions::GetInventoryItemCharge},\
     {"GetInventoryItemEnchantmentCharge",     ItemFunctions::GetInventoryItemEnchantmentCharge},\
+    {"GetInventoryItemSoul",                  ItemFunctions::GetInventoryItemSoul},\
     \
     {"SendEquipment",                         ItemFunctions::SendEquipment},\
     {"SendInventoryChanges",                  ItemFunctions::SendInventoryChanges}
@@ -44,7 +45,7 @@ public:
     static void EquipItem(unsigned short pid, unsigned short slot, const char* refId, unsigned int count, int charge, double enchantmentCharge = -1) noexcept;
     static void UnequipItem(unsigned short pid, unsigned short slot) noexcept;
 
-    static void AddItem(unsigned short pid, const char* refId, unsigned int count, int charge, double enchantmentCharge = -1) noexcept;
+    static void AddItem(unsigned short pid, const char* refId, unsigned int count, int charge, double enchantmentCharge = -1, const char* soul = "") noexcept;
     static void RemoveItem(unsigned short pid, const char* refId, unsigned short count) noexcept;
 
     static bool HasItemEquipped(unsigned short pid, const char* refId);
@@ -58,6 +59,7 @@ public:
     static int GetInventoryItemCount(unsigned short pid, unsigned int i) noexcept;
     static int GetInventoryItemCharge(unsigned short pid, unsigned int i) noexcept;
     static double GetInventoryItemEnchantmentCharge(unsigned short pid, unsigned int i) noexcept;
+    static const char *GetInventoryItemSoul(unsigned short pid, unsigned int i) noexcept;
 
     static void SendEquipment(unsigned short pid) noexcept;
     static void SendInventoryChanges(unsigned short pid, bool toOthers = false) noexcept;

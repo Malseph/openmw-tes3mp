@@ -91,7 +91,7 @@ if (DESIRED_QT_VERSION MATCHES 4)
 #        target_link_libraries(tes3mp-browser ${QT_QTMAIN_LIBRARY})
 #    endif(WIN32)
 else()
-    qt5_use_modules(tes3mp-browser Widgets Core)
+    target_link_libraries(tes3mp-browser Qt5::Widgets Qt5::Core)
 endif()
 
 if (BUILD_WITH_CODE_COVERAGE)

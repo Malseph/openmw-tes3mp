@@ -14,6 +14,21 @@
 #include "spellcasting.hpp"
 #include "actorutil.hpp"
 
+/*
+    Start of tes3mp addition
+
+    Include additional headers for multiplayer purposes
+*/
+#include <components/openmw-mp/Log.hpp>
+#include "../mwmp/Main.hpp"
+#include "../mwmp/LocalPlayer.hpp"
+#include "../mwmp/LocalActor.hpp"
+#include "../mwmp/PlayerList.hpp"
+#include "../mwmp/CellController.hpp"
+/*
+    End of tes3mp addition
+*/
+
 namespace MWMechanics
 {
     Enchanting::Enchanting()
@@ -84,13 +99,28 @@ namespace MWMechanics
         }
         enchantment.mEffects = mEffectList;
 
+
         // Apply the enchantment
-        const ESM::Enchantment *enchantmentPtr = MWBase::Environment::get().getWorld()->createRecord (enchantment);
-        std::string newItemId = mOldItemPtr.getClass().applyEnchantment(mOldItemPtr, enchantmentPtr->mId, getGemCharge(), mNewItemName);
+        //const ESM::Enchantment *enchantmentPtr = MWBase::Environment::get().getWorld()->createRecord (enchantment);
+        //std::string newItemId = mOldItemPtr.getClass().applyEnchantment(mOldItemPtr, enchantmentPtr->mId, getGemCharge(), mNewItemName);
 
         // Add the new item to player inventory and remove the old one
         store.remove(mOldItemPtr, 1, player);
-        store.add(newItemId, 1, player);
+        //store.add(newItemId, 1, player);
+
+        /*
+        Start of tes3mp addition
+
+        Send new Enchantment and Item dynamic declarations to server, don't add to inventory yet, server will do that.
+        */
+
+        mwmp::LocalPlayer *localPlayer = mwmp::Main::get().getLocalPlayer();
+        localPlayer->sendCustomEnchantmentAddition(enchantment, mOldItemPtr, mNewItemName, getGemCharge());
+
+        /*
+            End of tes3mp addition
+        */
+
 
         if(!mSelfEnchanting)
             payForEnchantment();

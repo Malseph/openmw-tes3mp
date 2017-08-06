@@ -31,6 +31,7 @@
 #include "../Packets/Player/PacketPlayerQuickKeys.hpp"
 #include "../Packets/Player/PacketPlayerRegionAuthority.hpp"
 #include "../Packets/Player/PacketPlayerRest.hpp"
+#include "../Packets/Player/PacketPlayerInteract.hpp"
 #include "../Packets/Player/PacketPlayerResurrect.hpp"
 #include "../Packets/Player/PacketPlayerShapeshift.hpp"
 #include "../Packets/Player/PacketPlayerSkill.hpp"
@@ -38,6 +39,7 @@
 #include "../Packets/Player/PacketPlayerSpellbook.hpp"
 #include "../Packets/Player/PacketPlayerStatsDynamic.hpp"
 #include "../Packets/Player/PacketPlayerTopic.hpp"
+#include "../Packets/Player/PacketPlayerDynamicRecord.hpp"
 
 #include "PlayerPacketController.hpp"
 
@@ -85,6 +87,7 @@ mwmp::PlayerPacketController::PlayerPacketController(RakNet::RakPeerInterface *p
     AddPacket<PacketPlayerQuickKeys>(&packets, peer);
     AddPacket<PacketPlayerRegionAuthority>(&packets, peer);
     AddPacket<PacketPlayerRest>(&packets, peer);
+    AddPacket<PacketPlayerInteract>(&packets, peer);
     AddPacket<PacketPlayerResurrect>(&packets, peer);
     AddPacket<PacketPlayerShapeshift>(&packets, peer);
     AddPacket<PacketPlayerSkill>(&packets, peer);
@@ -92,6 +95,7 @@ mwmp::PlayerPacketController::PlayerPacketController(RakNet::RakPeerInterface *p
     AddPacket<PacketPlayerSpellbook>(&packets, peer);
     AddPacket<PacketPlayerStatsDynamic>(&packets, peer);
     AddPacket<PacketPlayerTopic>(&packets, peer);
+    AddPacket<PacketPlayerDynamicRecord>(&packets, peer);
 }
 
 

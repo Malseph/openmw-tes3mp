@@ -7,13 +7,13 @@ Programmers
     Stanislav Zhukov (Koncord) - Overall architecture, networking & scripting systems, player sync, server browser
     David Cernat - World, NPC & quest sync, state saving & loading, general bug fixes
 
-
 Additional programming
 ----------------------
 
     Grim Kriegor - Lua teleportation commands, early script fixes
     Battlerax - Various small fixes
     Malseph - Additional scripting (State spam fix)
+	Jake Westrip (16bitint) - Dynamic record (Custom spells, potions, enchantments) and Soul Gem sync, misc. script hooks
 
 Community administrators
 ------------------------

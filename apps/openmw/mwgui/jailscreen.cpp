@@ -120,9 +120,15 @@ namespace MWGui
         for (int day=0; day<mDays; ++day)
         {
             int skill = Misc::Rng::rollDice(ESM::Skill::Length);
-            skills.insert(skill);
-
             MWMechanics::SkillValue& value = player.getClass().getNpcStats(player).getSkill(skill);
+
+            while(value.getBase() == 0)
+            {
+                skill = Misc::Rng::rollDice(ESM::Skill::Length);
+                value = player.getClass().getNpcStats(player).getSkill(skill);
+            }
+
+            skills.insert(skill);
 
             /*
                 Start of tes3mp change (minor)

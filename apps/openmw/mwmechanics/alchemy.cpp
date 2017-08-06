@@ -24,6 +24,21 @@
 #include "../mwworld/cellstore.hpp"
 #include "../mwworld/manualref.hpp"
 
+/*
+    Start of tes3mp addition
+
+    Include additional headers for multiplayer purposes
+*/
+#include <components/openmw-mp/Log.hpp>
+#include "../mwmp/Main.hpp"
+#include "../mwmp/LocalPlayer.hpp"
+#include "../mwmp/LocalActor.hpp"
+#include "../mwmp/PlayerList.hpp"
+#include "../mwmp/CellController.hpp"
+/*
+    End of tes3mp addition
+*/
+
 #include "magiceffects.hpp"
 #include "creaturestats.hpp"
 #include "npcstats.hpp"
@@ -302,11 +317,24 @@ void MWMechanics::Alchemy::addPotion (const std::string& name)
 
     newRecord.mEffects.mList = mEffects;
 
-    const ESM::Potion* record = getRecord(newRecord);
-    if (!record)
-        record = MWBase::Environment::get().getWorld()->createRecord (newRecord);
+    //const ESM::Potion* record = getRecord(newRecord);
+    //if (!record)
+    //    record = MWBase::Environment::get().getWorld()->createRecord (newRecord);
 
-    mAlchemist.getClass().getContainerStore (mAlchemist).add (record->mId, 1, mAlchemist);
+    /*
+    Start of tes3mp addition
+
+    Send new Potion dynamic declaration to server, don't add to inventory yet, server will do that.
+    */
+
+    mwmp::LocalPlayer *localPlayer = mwmp::Main::get().getLocalPlayer();
+    localPlayer->sendCustomPotionAddition(newRecord);
+
+
+
+    /*
+        End of tes3mp addition
+    */
 }
 
 void MWMechanics::Alchemy::increaseSkill()

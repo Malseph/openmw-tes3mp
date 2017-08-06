@@ -36,6 +36,8 @@
 #include "Networking.hpp"
 #include "CellController.hpp"
 #include "GUIController.hpp"
+#include "PlayerList.hpp"
+#include "DedicatedPlayer.hpp"
 #include "MechanicsHelper.hpp"
 
 using namespace mwmp;
@@ -502,6 +504,7 @@ void LocalPlayer::updateInventory(bool forceUpdate)
         item.count = iter.getRefData().getCount();
         item.charge = iter.getCellRef().getCharge();
         item.enchantmentCharge = iter.getCellRef().getEnchantmentCharge();
+        item.soulRefId = iter.getCellRef().getSoul();
         return false;
     };
 
@@ -680,6 +683,9 @@ void LocalPlayer::addItems()
 
             if (item.enchantmentCharge != -1)
                 itemPtr.getCellRef().setEnchantmentCharge(item.enchantmentCharge);
+
+            if (!item.soulRefId.empty())
+                itemPtr.getCellRef().setSoul(item.soulRefId);
         }
         catch (std::exception&)
         {
@@ -695,7 +701,7 @@ void LocalPlayer::addSpells()
 
     for (const auto &spell : spellbookChanges.spells)
         // Only add spells that are ensured to exist
-        if (MWBase::Environment::get().getWorld()->getStore().get<ESM::Spell>().search(spell.mId))
+        if (MWBase::Environment::get().getWorld()->getStore().get<ESM::Spell>().search(spell.mId) || spell.mId.compare(0, 10, "$mpdynamic") == 0)
             ptrSpells.add(spell.mId);
         else
             LOG_APPEND(Log::LOG_INFO, "- Ignored addition of invalid spell %s", spell.mId.c_str());
@@ -744,6 +750,66 @@ void LocalPlayer::addTopics()
 
         if (env.getWindowManager()->containsMode(MWGui::GM_Dialogue))
             env.getDialogueManager()->updateActorKnownTopics();
+    }
+}
+
+void LocalPlayer::addDynamicRecords()
+{
+    for (const auto &record : dynamicRecordChanges.records)
+    {
+        if(record.type == DynamicRecord::SPELL)
+        {
+            MWBase::Environment::get().getWorld()->createRecord(record.spell);
+        }
+        if(record.type == DynamicRecord::POTION)
+        {
+            MWBase::Environment::get().getWorld()->createRecord(record.potion);
+        }
+        if(record.type == DynamicRecord::ENCHANTMENT)
+        {
+            MWBase::Environment::get().getWorld()->createRecord(record.enchantment);
+
+            if(record.enchantmentContext.itemType == EnchantmentContext::ARMOR)
+            {
+                const ESM::Armor* a = MWBase::Environment::get().getWorld()->getStore().get<ESM::Armor>().find(record.enchantmentContext.oldItemRefId);
+                ESM::Armor newItem = *a;
+                newItem.mId=record.enchantmentContext.newItemRefId;
+                newItem.mName=record.enchantmentContext.newItemName;
+                newItem.mData.mEnchant=record.enchantmentContext.gemCharge;
+                newItem.mEnchant=record.enchantment.mId;
+                MWBase::Environment::get().getWorld()->createRecord (newItem);
+            }
+            else if(record.enchantmentContext.itemType == EnchantmentContext::CLOTHING)
+            {
+                const ESM::Clothing* c = MWBase::Environment::get().getWorld()->getStore().get<ESM::Clothing>().find(record.enchantmentContext.oldItemRefId);
+                ESM::Clothing newItem = *c;
+                newItem.mId=record.enchantmentContext.newItemRefId;
+                newItem.mName=record.enchantmentContext.newItemName;
+                newItem.mData.mEnchant=record.enchantmentContext.gemCharge;
+                newItem.mEnchant=record.enchantment.mId;
+                MWBase::Environment::get().getWorld()->createRecord (newItem);
+            }
+            else if(record.enchantmentContext.itemType == EnchantmentContext::WEAPON)
+            {
+                const ESM::Weapon* w = MWBase::Environment::get().getWorld()->getStore().get<ESM::Weapon>().find(record.enchantmentContext.oldItemRefId);
+                ESM::Weapon newItem = *w;
+                newItem.mId=record.enchantmentContext.newItemRefId;
+                newItem.mName=record.enchantmentContext.newItemName;
+                newItem.mData.mEnchant=record.enchantmentContext.gemCharge;
+                newItem.mEnchant=record.enchantment.mId;
+                MWBase::Environment::get().getWorld()->createRecord (newItem);
+            }
+            else if(record.enchantmentContext.itemType == EnchantmentContext::BOOK)
+            {
+                const ESM::Book* b = MWBase::Environment::get().getWorld()->getStore().get<ESM::Book>().find(record.enchantmentContext.oldItemRefId);
+                ESM::Book newItem = *b;
+                newItem.mId=record.enchantmentContext.newItemRefId;
+                newItem.mName=record.enchantmentContext.newItemName;
+                newItem.mData.mEnchant=record.enchantmentContext.gemCharge;
+                newItem.mEnchant=record.enchantment.mId;
+                MWBase::Environment::get().getWorld()->createRecord (newItem);
+            }
+        }
     }
 }
 
@@ -1283,6 +1349,7 @@ void LocalPlayer::sendInventory()
         item.count = iter.getRefData().getCount();
         item.charge = iter.getCellRef().getCharge();
         item.enchantmentCharge = iter.getCellRef().getEnchantmentCharge();
+        item.soulRefId = iter.getCellRef().getSoul();
 
         inventoryChanges.items.push_back(item);
     }
@@ -1351,17 +1418,72 @@ void LocalPlayer::sendSpellRemoval(std::string id)
     getNetworking()->getPlayerPacket(ID_PLAYER_SPELLBOOK)->Send();
 }
 
-void LocalPlayer::sendSpellAddition(const ESM::Spell &spell)
+void LocalPlayer::sendCustomPotionAddition(const ESM::Potion &potion)
 {
-    /*
-    spellbookChanges.spells.clear();
+    /* Add to DynamicRecordChanges here and send up to the server.
+    Don't add to any stores or anything on client-side, the server
+    will re-send to us. */
+    dynamicRecordChanges.records.clear();
 
-    spellbookChanges.spells.push_back(spell);
+    DynamicRecord record;
+    record.type = DynamicRecord::POTION;
+    record.potion = potion;
 
-    spellbookChanges.action = SpellbookChanges::ADD;
-    getNetworking()->getPlayerPacket(ID_PLAYER_SPELLBOOK)->setPlayer(this);
-    getNetworking()->getPlayerPacket(ID_PLAYER_SPELLBOOK)->Send();
-    */
+    dynamicRecordChanges.records.push_back(record);
+
+    dynamicRecordChanges.action = DynamicRecordChanges::ADD;
+    getNetworking()->getPlayerPacket(ID_PLAYER_DYNAMICRECORD)->setPlayer(this);
+    getNetworking()->getPlayerPacket(ID_PLAYER_DYNAMICRECORD)->Send();
+}
+
+void LocalPlayer::sendCustomEnchantmentAddition(const ESM::Enchantment &enchantment, MWWorld::Ptr oldItemPtr, std::string newItemName, int gemCharge)
+{
+    /* Add to DynamicRecordChanges here and send up to the server.
+    Don't add to any stores or anything on client-side, the server
+    will re-send to us. */
+
+    dynamicRecordChanges.records.clear();
+
+    DynamicRecord record;
+    record.type = DynamicRecord::ENCHANTMENT;
+    record.enchantment = enchantment;
+    record.enchantmentContext.gemCharge = gemCharge;
+    record.enchantmentContext.newItemName = newItemName;
+    record.enchantmentContext.oldItemRefId = oldItemPtr.getCellRef().getRefId();
+
+    std::string oldItemType = oldItemPtr.getTypeName();
+    if(oldItemType == typeid (ESM::Armor).name())
+        record.enchantmentContext.itemType = EnchantmentContext::ARMOR;
+    else if(oldItemType == typeid (ESM::Clothing).name())
+        record.enchantmentContext.itemType = EnchantmentContext::CLOTHING;
+    else if(oldItemType == typeid (ESM::Weapon).name())
+        record.enchantmentContext.itemType = EnchantmentContext::WEAPON;
+    else if(oldItemType == typeid (ESM::Book).name())
+        record.enchantmentContext.itemType = EnchantmentContext::BOOK;
+
+    dynamicRecordChanges.records.push_back(record);
+
+    dynamicRecordChanges.action = DynamicRecordChanges::ADD;
+    getNetworking()->getPlayerPacket(ID_PLAYER_DYNAMICRECORD)->setPlayer(this);
+    getNetworking()->getPlayerPacket(ID_PLAYER_DYNAMICRECORD)->Send();
+}
+
+void LocalPlayer::sendCustomSpellAddition(const ESM::Spell &spell)
+{
+    /* Add to DynamicRecordChanges here and send up to the server.
+    Don't add to any stores or anything on client-side, the server
+    will re-send to us. */
+    dynamicRecordChanges.records.clear();
+
+    DynamicRecord record;
+    record.type = DynamicRecord::SPELL;
+    record.spell = spell;
+
+    dynamicRecordChanges.records.push_back(record);
+
+    dynamicRecordChanges.action = DynamicRecordChanges::ADD;
+    getNetworking()->getPlayerPacket(ID_PLAYER_DYNAMICRECORD)->setPlayer(this);
+    getNetworking()->getPlayerPacket(ID_PLAYER_DYNAMICRECORD)->Send();
 }
 
 void LocalPlayer::sendSpellRemoval(const ESM::Spell &spell)
@@ -1530,6 +1652,14 @@ void LocalPlayer::sendShapeshift(bool werewolfState)
 
     getNetworking()->getPlayerPacket(ID_PLAYER_SHAPESHIFT)->setPlayer(this);
     getNetworking()->getPlayerPacket(ID_PLAYER_SHAPESHIFT)->Send();
+}
+
+void LocalPlayer::sendInteract(const MWWorld::Ptr& target)
+{
+    interactTarget = mwmp::PlayerList::getPlayer(target)->guid;
+
+    getNetworking()->getPlayerPacket(ID_PLAYER_INTERACT)->setPlayer(this);
+    getNetworking()->getPlayerPacket(ID_PLAYER_INTERACT)->Send();
 }
 
 void LocalPlayer::clearCellStates()

@@ -189,7 +189,7 @@ add_component_dir (openmw-mp/Packets/Player
         PacketPlayerInventory PacketPlayerJail PacketPlayerJournal PacketPlayerKillCount PacketPlayerLevel
         PacketPlayerMap PacketPlayerPosition PacketPlayerQuickKeys PacketPlayerRegionAuthority PacketPlayerRest
         PacketPlayerResurrect PacketPlayerShapeshift PacketPlayerSkill PacketPlayerSpeech PacketPlayerSpellbook
-        PacketPlayerStatsDynamic PacketPlayerTopic
+        PacketPlayerStatsDynamic PacketPlayerTopic PacketPlayerDynamicRecord PacketPlayerInteract
         )
 
 add_component_dir (openmw-mp/Packets/World
@@ -287,7 +287,7 @@ if (USE_QT)
         ${QT_QTCORE_LIBRARY}
         ${QT_QTGUI_LIBRARY})
     else()
-        qt5_use_modules(components Widgets Core)
+        target_link_libraries(components Qt5::Widgets Qt5::Core)
     endif()
 endif()
 
