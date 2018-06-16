@@ -13,21 +13,19 @@ Additional programming
 
     Grim Kriegor - Lua teleportation commands, early script fixes
     Battlerax - Various small fixes
-
+    Malseph - Additional scripting (State spam fix)
 
 Community administrators
 ------------------------
 
-    Volk Milit (Ja'Virr-Dar)
-    Texafornian
-    Testman
-
+    Wesley
+    Pesobags
+    Mac B
+    Ghorbash The Iron Hand
 
 Community moderators
 --------------------
-
-    Capostrophic
-    Michael Fitzmayer (mupf)
+    Modeus
 
 
 Art
@@ -39,27 +37,6 @@ Art
 Special thanks (in alphabetical order)
 --------------------------------------
 
-    Camul
-    David Wery
-    DestinedToDie
-    Gluka
-    Goodevil
-    greetasdf
-    Ignatious
-    iGrebla
-    James Wards of Gore Corps LAN Club (www.gorecorps.co.nz)
-    Jeremiah
-    Lewis Sadlier
-    Luc Keating
-    Malseph
-    Michael Zagar (Zoops)
-    Olaxan
-    psi29a
-    Rhiyo
-    Scorcio
-    Shnatsel
-    Simon Nemes
-    Zaphida
-    Zaric Zhakaron
-    All the developers of OpenMW for creating an amazing open source project
+All the great members of the community for ensuring this project stays alive.
+All the developers of OpenMW for creating an amazing open source project.
 
