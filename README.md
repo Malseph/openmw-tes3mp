@@ -39,3 +39,7 @@ Instructions: Running a server
 1. Forward the ports 25560 and 25565 for UDP. For more information on port forward, google "how to port forward"
 2. Open tes3mp-server-default and set your desired settings
 3. Run tes3mp-server.exe
+
+Censorship-Free Server Browser
+---------------
+We only ask that your server name not conflict with another, if you change it, and that you do not attempt to fake player counts. All are welcome on the browser.
