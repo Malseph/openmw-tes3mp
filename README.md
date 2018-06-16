@@ -15,31 +15,13 @@ Font Licenses:
 Project Status
 --------------
 
-[Version changelog](https://github.com/TES3MP/openmw-tes3mp/blob/master/tes3mp-changelog.md)
+The majority of the project is complete and fully playable. Few quests will not work properly and custom spells, enchanting, alchemy, vendor sync, and weather sync is not yet implimented.
 
-TES3MP is now playable in most respects. Player and NPC movement, animations, combat and spell casting are properly synchronized with small exceptions, as is picking up and dropping items in the world, using doors and levers, and adding and removing items from containers. Journal entries, faction stats and dialogue topics are also synchronized, allowing the majority of quests to work fine.
-
-[Serverside Lua scripts](https://github.com/TES3MP/CoreScripts) are used to save and load the state of most of the aforementioned.
-
-Contributing
+Management
 --------------
 
-Development has been relatively fast, but any contribution regarding [code](https://github.com/TES3MP/openmw-tes3mp/blob/master/CONTRIBUTING.md), documentation, bug hunting or video showcases is greatly appreciated.
+The project is currently being developed by David C. and Koncord. For more information, view credits. Tes3mp Community currently managed by Malseph.
 
-Test sessions are often advertised on [our Discord server](https://discord.gg/ECJk293) or in [our Steam group](https://steamcommunity.com/groups/mwmulti).
-
-Feel free to contact the [team members](https://github.com/TES3MP/openmw-tes3mp/blob/master/tes3mp-credits.md) for any questions you might have.
-
-Getting Started
----------------
-
-* [Quickstart guide](https://github.com/TES3MP/openmw-tes3mp/wiki/Quickstart-guide)
-* [Steam group](https://steamcommunity.com/groups/mwmulti) and its [detailed FAQ](http://steamcommunity.com/groups/mwmulti/discussions/1/353916184342480541/)
-* [TES3MP section on OpenMW forums](https://forum.openmw.org/viewforum.php?f=44)
-* [Subreddit](https://www.reddit.com/r/tes3mp)
-* [Known issues and bug reports](https://github.com/TES3MP/openmw-tes3mp/issues)
-
-Donations
----------------
-
-You can benefit the project by contributing to the Patreon pages of our two developers, [Koncord](https://www.patreon.com/Koncord) and [David Cernat](https://www.patreon.com/davidcernat), as well as by supporting [OpenMW](https://openmw.org).
+Community
+--------------
+https://www.reddit.com/r/CommunityTes3mp
