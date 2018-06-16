@@ -25,3 +25,17 @@ The project is currently being developed by David C. and Koncord. For more infor
 Community
 --------------
 https://www.reddit.com/r/CommunityTes3mp
+
+
+Instructions: Joining a Tes3mp Server
+---------------
+1: Unpack the tes3mp archive (Right click, extract all)
+2: Open openmw-launcher.exe and run the install wizard
+3. When install is complete, click the Data Files tab. Ensure Morrowind.esm is selected in the drop down menu. In the box below, make sure Tribunal is at the top and Bloodmoon is under that. You can change this step if you wish to use mods or no expansions.
+4: Close the openMW launcher. open the tes3mp browser and choose a server.
+
+Instructions: Running a server
+---------------
+1. Forward the ports 25560 and 25565 for UDP. For more information on port forward, google "how to port forward"
+2. Open tes3mp-server-default and set your desired settings
+3. Run tes3mp-server.exe
