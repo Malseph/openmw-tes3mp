@@ -16,6 +16,7 @@
     {"GetObjectEnchantmentCharge",            WorldFunctions::GetObjectEnchantmentCharge},\
     {"GetObjectGoldValue",                    WorldFunctions::GetObjectGoldValue},\
     {"GetObjectScale",                        WorldFunctions::GetObjectScale},\
+    {"GetObjectSoul",                         WorldFunctions::GetObjectSoul},\
     {"GetObjectState",                        WorldFunctions::GetObjectState},\
     {"GetObjectDoorState",                    WorldFunctions::GetObjectDoorState},\
     {"GetObjectLockLevel",                    WorldFunctions::GetObjectLockLevel},\
@@ -31,6 +32,7 @@
     {"GetContainerItemCount",                 WorldFunctions::GetContainerItemCount},\
     {"GetContainerItemCharge",                WorldFunctions::GetContainerItemCharge},\
     {"GetContainerItemEnchantmentCharge",     WorldFunctions::GetContainerItemEnchantmentCharge},\
+    {"GetContainerItemSoul",                  WorldFunctions::GetContainerItemSoul},\
     {"GetContainerItemActionCount",           WorldFunctions::GetContainerItemActionCount},\
     \
     {"SetEventCell",                          WorldFunctions::SetEventCell},\
@@ -45,6 +47,7 @@
     {"SetObjectEnchantmentCharge",            WorldFunctions::SetObjectEnchantmentCharge},\
     {"SetObjectGoldValue",                    WorldFunctions::SetObjectGoldValue},\
     {"SetObjectScale",                        WorldFunctions::SetObjectScale},\
+    {"SetObjectSoul",                         WorldFunctions::SetObjectSoul},\
     {"SetObjectState",                        WorldFunctions::SetObjectState},\
     {"SetObjectDoorState",                    WorldFunctions::SetObjectDoorState},\
     {"SetObjectLockLevel",                    WorldFunctions::SetObjectLockLevel},\
@@ -58,6 +61,7 @@
     {"SetContainerItemCount",                 WorldFunctions::SetContainerItemCount},\
     {"SetContainerItemCharge",                WorldFunctions::SetContainerItemCharge},\
     {"SetContainerItemEnchantmentCharge",     WorldFunctions::SetContainerItemEnchantmentCharge},\
+    {"SetContainerItemSoul",                  WorldFunctions::SetContainerItemSoul},\
     \
     {"AddWorldObject",                        WorldFunctions::AddWorldObject},\
     {"AddContainerItem",                      WorldFunctions::AddContainerItem},\
@@ -179,6 +183,15 @@ public:
     * \return The object scale.
     */
     static double GetObjectScale(unsigned int i) noexcept;
+
+    /**
+    * \brief Get the name of the creature whose soul is currently in the object at a
+    * certain index in the read event's object changes.
+    *
+    * \param i The index of the object.
+    * \return The name of soul in the object.
+    */
+    static const char* GetObjectSoul(unsigned int i) noexcept;
 
     /**
     * \brief Get the object state of the object at a certain index in the read event's object
@@ -310,6 +323,16 @@ public:
     static double GetContainerItemEnchantmentCharge(unsigned int objectIndex, unsigned int itemIndex) noexcept;
 
     /**
+    * \brief Get the soul of the container item at a certain itemIndex in the container changes
+    * of the object at a certain objectIndex in the read event's object changes.
+    *
+    * \param objectIndex The index of the object.
+    * \param itemIndex The index of the container item.
+    * \return The soul.
+    */
+    static const char* GetContainerItemSoul(unsigned int objectIndex, unsigned int itemIndex) noexcept;
+
+    /**
     * \brief Get the action count of the container item at a certain itemIndex in the container
     * changes of the object at a certain objectIndex in the read event's object changes.
     *
@@ -437,6 +460,15 @@ public:
     static void SetObjectScale(double scale) noexcept;
 
     /**
+    * \brief Set the soul of the temporary world object stored on the server.
+    *
+    *
+    * \param soul The soul.
+    * \return void
+    */
+    static void SetObjectSoul(const char* soul) noexcept;
+
+    /**
     * \brief Set the object state of the temporary world object stored on the server.
     *
     * Objects are enabled or disabled based on their object state.
@@ -543,6 +575,14 @@ public:
     * \return void
     */
     static void SetContainerItemEnchantmentCharge(double enchantmentCharge) noexcept;
+
+    /**
+    * \brief Set the soul of the temporary container item stored on the server.
+    *
+    * \param charge The soul.
+    * \return void
+    */
+    static void SetContainerItemSoul(const char* soul) noexcept;
 
     /**
     * \brief Add a copy of the server's temporary world object to the server's temporary event.

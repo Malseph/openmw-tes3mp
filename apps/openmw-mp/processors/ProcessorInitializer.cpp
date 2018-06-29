@@ -33,6 +33,7 @@
 #include "player/ProcessorPlayerPosition.hpp"
 #include "player/ProcessorPlayerQuickKeys.hpp"
 #include "player/ProcessorPlayerRest.hpp"
+#include "player/ProcessorPlayerInteract.hpp"
 #include "player/ProcessorPlayerResurrect.hpp"
 #include "player/ProcessorPlayerShapeshift.hpp"
 #include "player/ProcessorPlayerSkill.hpp"
@@ -40,6 +41,7 @@
 #include "player/ProcessorPlayerSpellbook.hpp"
 #include "player/ProcessorPlayerStatsDynamic.hpp"
 #include "player/ProcessorPlayerTopic.hpp"
+#include "player/ProcessorPlayerDynamicRecord.hpp"
 #include "ActorProcessor.hpp"
 #include "actor/ProcessorActorList.hpp"
 #include "actor/ProcessorActorTest.hpp"
@@ -103,6 +105,7 @@ void ProcessorInitializer()
     PlayerProcessor::AddProcessor(new ProcessorPlayerPosition());
     PlayerProcessor::AddProcessor(new ProcessorPlayerQuickKeys());
     PlayerProcessor::AddProcessor(new ProcessorPlayerRest());
+    PlayerProcessor::AddProcessor(new ProcessorPlayerInteract());
     PlayerProcessor::AddProcessor(new ProcessorPlayerResurrect());
     PlayerProcessor::AddProcessor(new ProcessorPlayerShapeshift());
     PlayerProcessor::AddProcessor(new ProcessorPlayerSkill());
@@ -110,6 +113,7 @@ void ProcessorInitializer()
     PlayerProcessor::AddProcessor(new ProcessorPlayerSpellbook());
     PlayerProcessor::AddProcessor(new ProcessorPlayerStatsDynamic());
     PlayerProcessor::AddProcessor(new ProcessorPlayerTopic());
+    PlayerProcessor::AddProcessor(new ProcessorPlayerDynamicRecord());
 
     ActorProcessor::AddProcessor(new ProcessorActorList());
     ActorProcessor::AddProcessor(new ProcessorActorAI());

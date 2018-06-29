@@ -84,6 +84,11 @@ double WorldFunctions::GetObjectScale(unsigned int i) noexcept
     return readEvent->worldObjects.at(i).scale;
 }
 
+const char* WorldFunctions::GetObjectSoul(unsigned int i) noexcept
+{
+    return readEvent->worldObjects.at(i).soul.c_str();
+}
+
 bool WorldFunctions::GetObjectState(unsigned int i) noexcept
 {
     return readEvent->worldObjects.at(i).objectState;
@@ -158,6 +163,12 @@ double WorldFunctions::GetContainerItemEnchantmentCharge(unsigned int objectInde
         .containerItems.at(itemIndex).enchantmentCharge;
 }
 
+const char* WorldFunctions::GetContainerItemSoul(unsigned int objectIndex, unsigned int itemIndex) noexcept
+{
+    return readEvent->worldObjects.at(objectIndex)
+            .containerItems.at(itemIndex).soul.c_str();
+}
+
 int WorldFunctions::GetContainerItemActionCount(unsigned int objectIndex, unsigned int itemIndex) noexcept
 {
     return readEvent->worldObjects.at(objectIndex)
@@ -217,6 +228,11 @@ void WorldFunctions::SetObjectGoldValue(int goldValue) noexcept
 void WorldFunctions::SetObjectScale(double scale) noexcept
 {
     tempWorldObject.scale = scale;
+}
+
+void WorldFunctions::SetObjectSoul(const char* soul) noexcept
+{
+    tempWorldObject.soul = soul;
 }
 
 void WorldFunctions::SetObjectState(bool objectState) noexcept
@@ -285,6 +301,11 @@ void WorldFunctions::SetContainerItemCharge(int charge) noexcept
 void WorldFunctions::SetContainerItemEnchantmentCharge(double enchantmentCharge) noexcept
 {
     tempContainerItem.enchantmentCharge = enchantmentCharge;
+}
+
+void WorldFunctions::SetContainerItemSoul(const char* soul) noexcept
+{
+    tempContainerItem.soul = soul;
 }
 
 void WorldFunctions::AddWorldObject() noexcept

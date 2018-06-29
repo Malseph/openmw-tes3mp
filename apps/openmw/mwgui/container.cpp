@@ -128,6 +128,7 @@ namespace MWGui
         containerItem.count = itemPtr.getRefData().getCount();
         containerItem.charge = itemPtr.getCellRef().getCharge();
         containerItem.enchantmentCharge = itemPtr.getCellRef().getEnchantmentCharge();
+        containerItem.soul = itemPtr.getCellRef().getSoul();
         containerItem.actionCount = count;
 
         worldObject.containerItems.push_back(containerItem);
@@ -177,6 +178,7 @@ namespace MWGui
 
             containerItem.charge = itemPtr.getCellRef().getCharge();
             containerItem.enchantmentCharge = itemPtr.getCellRef().getEnchantmentCharge();
+            containerItem.soul = itemPtr.getCellRef().getSoul();
 
             worldObject.containerItems.push_back(containerItem);
             worldEvent->addObject(worldObject);

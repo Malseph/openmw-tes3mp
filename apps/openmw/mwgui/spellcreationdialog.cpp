@@ -419,22 +419,13 @@ namespace MWGui
 
         MWBase::Environment::get().getWindowManager()->playSound ("Mysticism Hit");
 
-        const ESM::Spell* spell = MWBase::Environment::get().getWorld()->createRecord(mSpell);
-
-        MWMechanics::CreatureStats& stats = player.getClass().getCreatureStats(player);
-        MWMechanics::Spells& spells = stats.getSpells();
-        spells.add (spell->mId);
-
         /*
             Start of tes3mp addition
 
-            Send an ID_PLAYER_SPELLBOOK packet every time a player buys a custom spell from
+            Send an ID_PLAYER_DYNAMICRECORD packet every time a player buys a custom spell from
             the Spellmaking screen
-
-            Include a messagebox notifying players that custom spells are not synced yet
         */
-        MWBase::Environment::get().getWindowManager()->messageBox("Custom spells are not synchronized in multiplayer yet and their effects cannot be seen by other players in most cases.");
-        mwmp::Main::get().getLocalPlayer()->sendSpellAddition(*spell);
+        mwmp::Main::get().getLocalPlayer()->sendCustomSpellAddition(mSpell);
         /*
             End of tes3mp addition
         */

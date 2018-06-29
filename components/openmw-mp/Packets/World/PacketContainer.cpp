@@ -50,6 +50,7 @@ void PacketContainer::Packet(RakNet::BitStream *bs, bool send)
             RW(containerItem.charge, send);
             RW(containerItem.enchantmentCharge, send);
             RW(containerItem.actionCount, send);
+            RW(containerItem.soul, send);
 
             if (!send)
                 worldObject.containerItems.push_back(containerItem);

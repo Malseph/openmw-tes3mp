@@ -38,6 +38,7 @@
 #include "player/ProcessorPlayerQuickKeys.hpp"
 #include "player/ProcessorPlayerRegionAuthority.hpp"
 #include "player/ProcessorPlayerRest.hpp"
+#include "player/ProcessorPlayerInteract.hpp"
 #include "player/ProcessorPlayerResurrect.hpp"
 #include "player/ProcessorPlayerShapeshift.hpp"
 #include "player/ProcessorPlayerSkill.hpp"
@@ -45,6 +46,7 @@
 #include "player/ProcessorPlayerSpellbook.hpp"
 #include "player/ProcessorPlayerStatsDynamic.hpp"
 #include "player/ProcessorPlayerTopic.hpp"
+#include "player/ProcessorPlayerDynamicRecord.hpp"
 
 #include "WorldProcessor.hpp"
 #include "world/ProcessorConsoleCommand.hpp"
@@ -117,6 +119,7 @@ void ProcessorInitializer()
     PlayerProcessor::AddProcessor(new ProcessorPlayerQuickKeys());
     PlayerProcessor::AddProcessor(new ProcessorPlayerRegionAuthority());
     PlayerProcessor::AddProcessor(new ProcessorPlayerRest());
+    PlayerProcessor::AddProcessor(new ProcessorPlayerInteract());
     PlayerProcessor::AddProcessor(new ProcessorPlayerResurrect());
     PlayerProcessor::AddProcessor(new ProcessorPlayerShapeshift());
     PlayerProcessor::AddProcessor(new ProcessorPlayerSkill());
@@ -124,6 +127,7 @@ void ProcessorInitializer()
     PlayerProcessor::AddProcessor(new ProcessorPlayerSpellbook());
     PlayerProcessor::AddProcessor(new ProcessorPlayerStatsDynamic());
     PlayerProcessor::AddProcessor(new ProcessorPlayerTopic());
+    PlayerProcessor::AddProcessor(new ProcessorPlayerDynamicRecord());
 
     WorldProcessor::AddProcessor(new ProcessorConsoleCommand());
     WorldProcessor::AddProcessor(new ProcessorContainer());

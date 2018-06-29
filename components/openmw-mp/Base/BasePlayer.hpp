@@ -11,6 +11,8 @@
 #include <components/esm/creaturestats.hpp>
 #include <components/esm/loadclas.hpp>
 #include <components/esm/loadspel.hpp>
+#include <components/esm/loadalch.hpp>
+#include <components/esm/loadench.hpp>
 
 #include <components/openmw-mp/Base/BaseStructs.hpp>
 
@@ -79,6 +81,43 @@ namespace mwmp
 
         unsigned short slot;
         int type;
+    };
+
+    struct EnchantmentContext
+    {
+        enum ENCHANTED_ITEM_TYPE
+        {
+            ARMOR = 0,
+            BOOK = 1,
+            CLOTHING = 2,
+            WEAPON = 3
+        };
+
+        int itemType;
+
+        std::string oldItemRefId;
+        std::string newItemName;
+        std::string newItemRefId;
+        int gemCharge;
+    };
+
+    struct DynamicRecord
+    {
+        std::string refId;
+
+        enum DYNAMIC_RECORD_TYPE
+        {
+            SPELL = 0,
+            POTION = 1,
+            ENCHANTMENT = 2
+        };
+
+        int type;
+
+        ESM::Spell spell;
+        ESM::Potion potion;
+        ESM::Enchantment enchantment;
+        EnchantmentContext enchantmentContext;
     };
 
     struct CellState
@@ -165,10 +204,22 @@ namespace mwmp
         int action; // 0 - Clear and set in entirety, 1 - Add spell, 2 - Remove spell
     };
 
-    struct QuickKeyChanges
-    {
+    struct QuickKeyChanges {
         std::vector<QuickKey> quickKeys;
         unsigned int count;
+    };
+
+    struct DynamicRecordChanges
+    {
+        std::vector<DynamicRecord> records;
+        unsigned int count;
+        enum ACTION_TYPE
+        {
+            SET = 0,
+            ADD,
+            REMOVE
+        };
+        int action; // 0 - Clear and set in entirety, 1 - Add record, 2 - Remove record
     };
 
     struct CellStateChanges
@@ -235,6 +286,7 @@ namespace mwmp
         InventoryChanges inventoryChanges;
         SpellbookChanges spellbookChanges;
         QuickKeyChanges quickKeyChanges;
+        DynamicRecordChanges dynamicRecordChanges;
         JournalChanges journalChanges;
         FactionChanges factionChanges;
         TopicChanges topicChanges;
@@ -292,6 +344,8 @@ namespace mwmp
         std::string jailEndText;
 
         unsigned int resurrectType;
+
+        RakNet::RakNetGUID interactTarget;
 
         bool diedSinceArrestAttempt;
         bool isReceivingQuickKeys;

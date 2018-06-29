@@ -43,6 +43,7 @@ namespace mwmp
         void addSpells();
         void addJournalItems();
         void addTopics();
+        void addDynamicRecords();
 
         void removeItems();
         void removeSpells();
@@ -74,7 +75,9 @@ namespace mwmp
         void sendSpellbook();
         void sendCellStates();
         void sendSpellAddition(std::string id);
-        void sendSpellAddition(const ESM::Spell &spell);
+        void sendCustomSpellAddition(const ESM::Spell &spell);
+        void sendCustomPotionAddition(const ESM::Potion &potion);
+        void sendCustomEnchantmentAddition(const ESM::Enchantment &enchantment, MWWorld::Ptr oldItemPtr, std::string newItemName, int gemCharge);
         void sendSpellRemoval(std::string id);
         void sendSpellRemoval(const ESM::Spell &spell);
         void sendQuickKey(unsigned short slot, int type, const std::string& itemId = "");
@@ -87,6 +90,7 @@ namespace mwmp
         void sendKill(const std::string& refId, int number);
         void sendBook(const std::string& bookId);
         void sendShapeshift(bool isWerewolf);
+        void sendInteract(const MWWorld::Ptr& target);
 
         void clearCellStates();
         void clearCurrentContainer();

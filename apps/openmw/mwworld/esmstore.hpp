@@ -169,7 +169,11 @@ namespace MWWorld
         template <class T>
         const T *insert(const T &x) {
             std::ostringstream id;
-            id << "$dynamic" << mDynamicCount++;
+            if(x.mId.empty()) {
+                id << "$dynamic" << mDynamicCount++;
+            }else{
+                id << x.mId;
+            }
 
             Store<T> &store = const_cast<Store<T> &>(get<T>());
             if (store.search(id.str()) != 0) {

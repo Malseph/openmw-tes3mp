@@ -976,10 +976,15 @@ namespace MWClass
         /*
             Start of tes3mp addition
 
-            Don't display a dialogue screen for two players interacting with each other
+            Send packet when interacting with another player
         */
+
         if (actor == MWMechanics::getPlayer() && mwmp::PlayerList::isDedicatedPlayer(ptr))
-            return std::shared_ptr<MWWorld::Action>(new MWWorld::FailedAction("Not implemented."));
+        {
+            mwmp::Main::get().getLocalPlayer()->sendInteract(ptr);
+            return std::shared_ptr<MWWorld::Action>(new MWWorld::FailedAction(""));
+        }
+
         /*
             End of tes3mp addition
         */

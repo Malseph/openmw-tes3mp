@@ -203,7 +203,7 @@ Networking::Networking(): peer(RakNet::RakPeerInterface::GetInstance()), playerP
     RakNet::SocketDescriptor sd;
     sd.port=0;
     auto b = peer->Startup(1, &sd, 1);
-    RakAssert(b==RakNet::RAKNET_STARTED);
+    RakAssert(b==RakNet::CRABNET_STARTED);
 
     playerPacketController.SetStream(0, &bsOut);
     actorPacketController.SetStream(0, &bsOut);
@@ -280,7 +280,7 @@ void Networking::connect(const std::string &ip, unsigned short port, std::vector
     sstr << TES3MP_PROTO_VERSION;
     sstr << Version::getOpenmwVersion(Main::getResDir()).mCommitHash;
 
-    if (peer->Connect(master.ToString(false), master.GetPort(), sstr.str().c_str(), (int) sstr.str().size(), 0, 0, 3, 500, 0) != RakNet::CONNECTION_ATTEMPT_STARTED)
+    if (peer->Connect(master.ToString(false), master.GetPort(), sstr.str().c_str(), (int) sstr.str().size(), 0, 0, 3, 500, 1000000) != RakNet::CONNECTION_ATTEMPT_STARTED)
         errmsg = "Connection attempt failed.\n";
 
     bool queue = true;
