@@ -15,7 +15,7 @@ Font Licenses:
 Project Status
 --------------
 
-The majority of the project is complete and fully playable. Few quests will not work properly and custom spells, enchanting, alchemy, vendor sync, and weather sync is not yet implimented.
+The majority of the project is complete and fully playable. Few quests will not work properly. Weather sync, complete summon sync, vendor sync not yet implemented.
 
 Management
 --------------
